@@ -1,0 +1,30 @@
+#include <OneWire.h>
+#include <DallasTemperature.h>
+
+//Pino do sensor de temperatura
+int OneWireBus = 2;
+
+//inicializa o sensor
+OneWire oneWire(OneWireBus);
+
+//Passar a referencia do OneWire para o Dallas Temperature
+DallasTemperature sensors(&oneWire);
+
+void setup() {
+  //Comunicação serial
+  Serial.begin(9600);
+
+  //Prepara os sensores
+  sensors.begin();
+  
+  Serial.print("Requisicao de Temperaturas ");
+  sensors.requestTemperatures(); //pede a temperatura
+  Serial.println("FEITO!");
+}
+
+void loop() {
+  Serial.print("A temperatura do dispositivo e': ");
+  Serial.print(sensors.getTempCByIndex(0)); //recebe a leitura e imprime-a
+  Serial.println(" C");
+
+}
